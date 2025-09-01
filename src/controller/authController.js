@@ -1,24 +1,7 @@
 const { COOKIE_SECURE, FRONTEND_URL } = require("../config/serverConfig");
 const { loginUser } = require("../service/authService");
 
-async function logout(req, res) {
-    console.log("Cookie from frontend", req.cookies);
 
-    res.cookie("authToken", "", {
-        httpOnly: true,
-        secure: COOKIE_SECURE,
-        sameSite: "lax",
-        maxAge: 0, 
-      
-    });
-
-    return res.status(200).json({
-        success: true,
-        message: "Log out successful",
-        error: {},
-        data: {}
-    });
-}
 
 async function login(req, res) {
     try {
@@ -54,6 +37,25 @@ async function login(req, res) {
             error: error
         });
     }
+}
+
+async function logout(req, res) {
+    console.log("Cookie from frontend", req.cookies);
+
+    res.cookie("authToken", "", {
+        httpOnly: true,
+        secure: COOKIE_SECURE,
+        sameSite: "lax",
+        maxAge: 0, 
+      
+    });
+
+    return res.status(200).json({
+        success: true,
+        message: "Log out successful",
+        error: {},
+        data: {}
+    });
 }
 
 module.exports = {
