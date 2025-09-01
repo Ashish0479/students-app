@@ -50,6 +50,13 @@ app.use("/notifications", notificationRouter);
 app.get('/hi',(req,res)=>{
     return res.json({message:'hello'})
 })
+
+app.get("/api/quote", async (req, res) => {
+  const response = await fetch("https://zenquotes.io/api/today");
+  const data = await response.json();
+  res.json(data);
+});
+
 console.log(serverConfig.PORT)
 
 app.listen(5500, async()=>{
