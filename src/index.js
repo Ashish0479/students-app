@@ -16,13 +16,23 @@ const app = express()
 const cors = require('cors');
 
 
-app.use(cors({
+const allowedOrigins = [
+  "https://pathvibe.vercel.app",
+  "https://student-app-frontend-crl0.onrender.com"
+];
 
-
-    origin: 'https://pathvibe.vercel.app'|| 'https://student-app-frontend-crl0.onrender.com',// allow to server to accept request from different origin
-    credentials: true, // allow session cookie from browser to pass through
-
-}));
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
 
 
 app.use(cookieParser())
